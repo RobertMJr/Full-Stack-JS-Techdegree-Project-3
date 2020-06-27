@@ -16,8 +16,8 @@ button {
 
 body {
   font: 1em/1.5;
-  color: rgba(6, 49, 68, 0.9);
-	background: #43b47f;
+  color:whitesmoke;
+  background: #438bebb2;
 }
 
 header {
@@ -40,7 +40,7 @@ a {
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #4ae67ead;
+	background: #397cac;
 	border: 2px solid rgba(8, 63, 87, 0.6);
 	border-radius: 3px;
 }
@@ -75,7 +75,7 @@ legend {
 }
 
 label {
-	color: #000;
+	color: whitesmoke;
 	display: block;
 	margin-bottom: .5em;
 }
@@ -109,7 +109,7 @@ input[type="radio"] {
 button {
 	color: #fff;
 	padding: .55em 1.25em;
-	background: #21a785;
+	background: #438bebb2;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
 	border: 2px solid black;
@@ -118,7 +118,7 @@ button {
 }
 
 button:hover {
-	background: #022e16;
+	background: #0d4064;
 }
 
 input, 
