@@ -187,6 +187,7 @@ const validateActivity = () => {
     for (let i = 0; i < inputsActivities.length; i += 1){
         console.log(inputsActivities[i]);
         if (inputsActivities[i].checked) {
+            fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
             return true;
         }
     }
