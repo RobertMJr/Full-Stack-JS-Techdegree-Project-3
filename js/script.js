@@ -249,16 +249,18 @@ if (!validateActivity()) {
     event.preventDefault();
     console.log('The activity validator prevented submission');
 }
-if (!validateCCNumber()){
-    event.preventDefault();
-    console.log('The CCNumber validator prevented submission');
-}
-if (!validateZipCode()){
-    event.preventDefault();
-    console.log('The Zip Code validator preveneted submission');
-}
-if (!validateCVV()) {
-    preventDefault();
-    console.log('The CVV validator prevented submission');
+if (paymentSelect.children[1].selected){
+    if (!validateCCNumber()){
+        event.preventDefault();
+        console.log('The CCNumber validator prevented submission');
+    }
+    if (!validateZipCode()){
+        event.preventDefault();
+        console.log('The Zip Code validator preveneted submission');
+    }
+    if (!validateCVV()) {
+        event.preventDefault();
+        console.log('The CVV validator prevented submission');
+    }
 }
 });
