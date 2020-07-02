@@ -146,6 +146,7 @@ if (event.target.value === 'credit card') {
 // Select the elements that will need to be validated and assign them each of them to a variable
 const form = document.querySelector('form');
 const name =  document.querySelector('#name');
+const nameLabel = name.previousElementSibling;
 const email = document.querySelector('#mail');
 const creditCard = document.querySelector('#cc-num')
 const zipCode = document.querySelector('#zip');
@@ -155,11 +156,27 @@ const cvv = document.querySelector('#cvv');
     - Name field can't be blank
     - Allows a single name such as "John" and also a name in the format of "FirstName LastName"
 */
-const validateName = () => {
+const validateName = (listener="click") => {
     const nameValue = name.value;
-    if (/^[a-z]+ ?[a-z]+$/i.test(nameValue)) {
+    if (/^[a-z]+ ?([a-z]+)?$/i.test(nameValue)) {
+        nameLabel.textContent = "Name:";
+        nameLabel.style.color = "whitesmoke";
         name.style.borderColor = 'white';
+        nameLabel.style.backgroundColor = "";
+        nameLabel.style.paddingBottom = "0px";
         return true;
+    } else if(listener === "keyup" && nameValue.length >= 1){
+        name.style.borderColor = '#ee200ef6';
+        nameLabel.textContent = "The Name field accepts only letters and a space character.";
+        nameLabel.style.backgroundColor = "red";
+        nameLabel.style.padding = "5px";
+        return false;
+    } else if(listener === "keyup" && nameValue.length === 0){
+        name.style.borderColor = '#ee200ef6';
+        nameLabel.textContent = "The Name field cannot be empty.";
+        nameLabel.style.backgroundColor = "red";
+        nameLabel.style.padding = "5px";
+        return false;
     } else {
         name.style.borderColor = '#ee200ef6';
         name.value = '';
@@ -177,7 +194,7 @@ const validateEmail = () => {
     } else {
         email.style.borderColor = '#ee200ef6';
         email.value = '';
-        email.placeholder = "Please enter your email address"
+        email.placeholder = "Please enter your email address";
         return false;
     }
 };
@@ -201,10 +218,15 @@ const validateCCNumber = () => {
     if (/^\d{13,16}$/.test(creditCardValue)) {
         creditCard.style.borderColor = 'white';
         return true;
+    } else if (creditCardValue.length === 0) {
+        creditCard.style.borderColor = '#ee200ef6';
+        creditCard.value = '';
+        creditCard.placeholder = "Please enter a credit card number";
+        return false;  
     } else {
         creditCard.style.borderColor = '#ee200ef6';
         creditCard.value = '';
-        creditCard.placeholder = "Enter your Credit Card Number"
+        creditCard.placeholder = "Enter a number between 13 and 16 digits long.";
         return false;
     }
 };
@@ -264,4 +286,11 @@ if (paymentSelect.children[1].selected){
         console.log('The CVV validator prevented submission');
     }
 }
+});
+
+name.addEventListener('keyup', (event) => {
+    if (!validateName("keyup")) {
+        event.preventDefault();
+        console.log('The keyup name validator prevented submission');
+    }
 });
