@@ -69,6 +69,7 @@ designSelect.addEventListener('change', (event) =>{
 // Select the 'activities' fieldset and all its input elements
 const fieldsetActivities = document.querySelector('.activities');
 const inputsActivities = document.querySelectorAll('.activities input');
+const activitiesErrParagraph = createErrorElement('p');
 // Create an element to display the total activity cost.
 const totalCostParagraph = document.createElement('p');
 // Add the element that will display the total activity cost to the 'activities fieldset'.
@@ -105,7 +106,6 @@ for (let i = 0; i < inputsActivities.length; i += 1){
         if (clickedActivity.checked){
             inputsActivities[i].disabled = true;
             inputsActivities[i].parentElement.style.color = 'gray';
-
         } else {
             inputsActivities[i].disabled = false;
             inputsActivities[i].parentElement.style.color = '';
@@ -142,8 +142,33 @@ if (event.target.value === 'credit card') {
     creditCardOption.hidden = true;
 }
 });
+
+function createErrorElement(elem) {
+    if (elem === 'span') {
+        const spanElement = document.createElement('span');
+        spanElement.style.color = 'red';
+        spanElement.style.padding = "0px 2px";
+        spanElement.style.marginBottom = "2px";
+        spanElement.style.display = "inline-block";
+        spanElement.style.border = "2px solid red";
+        spanElement.style.borderRadius = "5px";
+        spanElement.style.backgroundColor = "white";
+        return spanElement;
+    } else {
+        const errorP = document.createElement('p');
+        errorP.textContent = "Please select at least one activity";
+        errorP.style.color = "red";
+        errorP.style.backgroundColor = "white";
+        errorP.style.display = "inline-block";
+        errorP.style.marginTop = "0px";
+        errorP.style.padding = "0px 2px";
+        errorP.style.border = "2px solid red";
+        errorP.style.borderRadius = "5px";
+        return errorP;
+    }
+};
   
-// Select the elements that will need to be validated and assign them each of them to a variable
+// Select the elements that will be used for validation and assign them each of them to a variable
 const form = document.querySelector('form');
 const name =  document.querySelector('#name');
 const nameLabel = name.previousElementSibling;
@@ -151,146 +176,149 @@ const email = document.querySelector('#mail');
 const creditCard = document.querySelector('#cc-num')
 const zipCode = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
+const fieldSet = document.querySelector('form').firstElementChild;
+const nameSpan = createErrorElement('span');
+const emailSpan = createErrorElement('span');
 
 /* Validation function for the name: 
     - Name field can't be blank
     - Allows a single name such as "John" and also a name in the format of "FirstName LastName"
 */
-const validateName = (listener="click") => {
+const validateName = () => {
     const nameValue = name.value;
-    if (/^[a-z]+ ?([a-z]+)?$/i.test(nameValue)) {
-        nameLabel.textContent = "Name:";
-        nameLabel.style.color = "whitesmoke";
-        name.style.borderColor = 'white';
-        nameLabel.style.backgroundColor = "";
-        nameLabel.style.paddingBottom = "0px";
-        return true;
-    } else if(listener === "keyup" && nameValue.length >= 1){
-        name.style.borderColor = '#ee200ef6';
-        nameLabel.textContent = "The Name field accepts only letters and a space character.";
-        nameLabel.style.backgroundColor = "red";
-        nameLabel.style.padding = "5px";
-        return false;
-    } else if(listener === "keyup" && nameValue.length === 0){
-        name.style.borderColor = '#ee200ef6';
-        nameLabel.textContent = "The Name field cannot be empty.";
-        nameLabel.style.backgroundColor = "red";
-        nameLabel.style.padding = "5px";
-        return false;
-    } else {
-        name.style.borderColor = '#ee200ef6';
-        name.value = '';
-        name.placeholder = 'Please enter your name';
-        return false;
-    }
+    return /^[a-z]+ ?([a-z]+)?$/i.test(nameValue); 
 };
 
 /* Validation function for the email */
 const validateEmail = () => {
     const emailValue = email.value;
-    if (/^[^@\s]+@[^@.\s]+\.[a-z]+$/i.test(emailValue)) {
-        email.style.borderColor = 'white';
-        return true;
-    } else {
-        email.style.borderColor = '#ee200ef6';
-        email.value = '';
-        email.placeholder = "Please enter your email address";
-        return false;
-    }
+    return /^[^@\s]+@[^@.\s]+\.[a-z]+$/i.test(emailValue);
 };
 
 /* Validation function for the activities */
 const validateActivity = () => {
     for (let i = 0; i < inputsActivities.length; i += 1){
-        console.log(inputsActivities[i]);
         if (inputsActivities[i].checked) {
-            fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
             return true;
         }
     }
-    fieldsetActivities.firstElementChild.style.color = '#ee200ef6';
     return false;
 };
 
 /* Validation function for the credit card number */
 const validateCCNumber = () => {
     const creditCardValue = creditCard.value;
-    if (/^\d{13,16}$/.test(creditCardValue)) {
-        creditCard.style.borderColor = 'white';
-        return true;
-    } else if (creditCardValue.length === 0) {
-        creditCard.style.borderColor = '#ee200ef6';
-        creditCard.value = '';
-        creditCard.placeholder = "Please enter a credit card number";
-        return false;  
-    } else {
-        creditCard.style.borderColor = '#ee200ef6';
-        creditCard.value = '';
-        creditCard.placeholder = "Enter a number between 13 and 16 digits long.";
-        return false;
-    }
+    return /^\d{13,16}$/.test(creditCardValue);
 };
 
 /* Validation function for the Zip Code */
 
 const validateZipCode = () => {
     const zipCodeValue = zipCode.value;
-    if (/^\d{5}$/.test(zipCodeValue)) {
-        zipCode.style.borderColor = 'white';
-        return true;
-    } else {
-        zipCode.style.borderColor = '#ee200ef6';
-        zipCode.value = '';
-        return false;
-    }
-}
+    return (/^\d{5}$/.test(zipCodeValue));
+};
 
 /* Validation function for the CVV */
 const validateCVV = () => {
     const cardVerificationValue = cvv.value;
-    if (/^\d{3}$/.test(cardVerificationValue)) {
-        cvv.style.borderColor = 'white';
-        return true;
-    } else {
-        cvv.style.borderColor = '#ee200ef6';
-        cvv.value = '';
-        return false;
-    }
-}
+    return /^\d{3}$/.test(cardVerificationValue);
+};
 
 // Test event listener
 form.addEventListener('submit', (event) => {
 if (!validateName()) {
     event.preventDefault();
-    console.log('The name validator prevented submission');
+    name.style.borderColor = '#ee200ef6';
+    name.placeholder = "Please enter your name";
+} else {
+    name.style.borderColor = 'rgb(111, 157, 220)';
 }
 if (!validateEmail()) {
     event.preventDefault();
-    console.log('The email validator prevented submission');
-}
+    email.style.borderColor = '#ee200ef6';
+    email.placeholder = "Please enter your email address";
+} else {
+    email.style.borderColor = 'rgb(111, 157, 220)';
+} 
 if (!validateActivity()) {
     event.preventDefault();
-    console.log('The activity validator prevented submission');
-}
+    fieldsetActivities.firstElementChild.style.color = 'red';
+    fieldsetActivities.insertBefore(activitiesErrParagraph, fieldsetActivities.firstElementChild);
+} else {
+    if (activitiesErrParagraph){
+        activitiesErrParagraph.remove();
+    }
+    fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
+} 
 if (paymentSelect.children[1].selected){
     if (!validateCCNumber()){
         event.preventDefault();
-        console.log('The CCNumber validator prevented submission');
+        creditCard.style.borderColor = '#ee200ef6';
+        creditCard.value = '';
+        creditCard.placeholder = "Please enter your credit card number";
+    } else {
+        creditCard.style.borderColor = 'rgb(111, 157, 220)';
     }
     if (!validateZipCode()){
         event.preventDefault();
-        console.log('The Zip Code validator preveneted submission');
+        zipCode.style.borderColor = '#ee200ef6';
+        zipCode.value = '';
+    } else {
+        zipCode.style.borderColor = 'rgb(111, 157, 220)';
     }
     if (!validateCVV()) {
         event.preventDefault();
-        console.log('The CVV validator prevented submission');
+        cvv.style.borderColor = '#ee200ef6';
+        cvv.value = '';
+    } else {
+        cvv.style.borderColor = 'rgb(111, 157, 220)';
     }
 }
 });
 
-name.addEventListener('keyup', (event) => {
-    if (!validateName("keyup")) {
-        event.preventDefault();
-        console.log('The keyup name validator prevented submission');
+name.addEventListener('input', (event) => {
+   if (!validateName() && event.target.value.length === 0) {
+    name.style.borderColor = '#ee200ef6';
+    nameSpan.textContent = "Please Enter Your Name - the name field can't be empty";
+    fieldSet.insertBefore(nameSpan, name);
+   } else if (!validateName()) {
+    if (nameSpan) {
+        nameSpan.remove();
+    }
+    name.style.borderColor = '#ee200ef6';
+    nameSpan.textContent = "Please Enter Your Name - only letters and a space";
+    fieldSet.insertBefore(nameSpan, name);
+   } else {
+       if (nameSpan) {
+           nameSpan.remove();
+       }
+       name.style.borderColor = 'rgb(111, 157, 220)';
+   }
+});
+
+email.addEventListener('input', (event) => {
+    if (!validateEmail() && event.target.value.length === 0) {
+        email.style.borderColor = '#ee200ef6';
+        emailSpan.textContent = "Please Enter Your Email - the email field can't be empty";
+        fieldSet.insertBefore(emailSpan, email);
+    } else if (!validateEmail()) {
+        if (emailSpan) {
+            emailSpan.remove();
+        }
+        email.style.borderColor = '#ee200ef6';
+        emailSpan.textContent = 'Please Enter a Valid Email Address: "name@example.com"';
+        fieldSet.insertBefore(emailSpan, email);
+    } else {
+        if (emailSpan) {
+            emailSpan.remove();
+        }
+        email.style.borderColor = 'rgb(111, 157, 220)';
+    }
+});
+
+fieldsetActivities.addEventListener('change', () => {
+    if(validateActivity() && activitiesErrParagraph) {
+        activitiesErrParagraph.remove();
+        fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
     }
 });
