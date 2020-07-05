@@ -263,6 +263,7 @@ if (paymentSelect.children[1].selected){
         event.preventDefault();
         zipCode.style.borderColor = '#ee200ef6';
         zipCode.value = '';
+        zipCode.placeholder = "5 digits";
     } else {
         zipCode.style.borderColor = 'rgb(111, 157, 220)';
     }
@@ -270,6 +271,7 @@ if (paymentSelect.children[1].selected){
         event.preventDefault();
         cvv.style.borderColor = '#ee200ef6';
         cvv.value = '';
+        cvv.placeholder = "3 digits";
     } else {
         cvv.style.borderColor = 'rgb(111, 157, 220)';
     }
@@ -299,14 +301,14 @@ name.addEventListener('input', (event) => {
 email.addEventListener('input', (event) => {
     if (!validateEmail() && event.target.value.length === 0) {
         email.style.borderColor = '#ee200ef6';
-        emailSpan.textContent = "Please Enter Your Email - the email field can't be empty";
+        emailSpan.textContent = "Please Enter Your Email: email field can't be empty";
         fieldSet.insertBefore(emailSpan, email);
     } else if (!validateEmail()) {
         if (emailSpan) {
             emailSpan.remove();
         }
         email.style.borderColor = '#ee200ef6';
-        emailSpan.textContent = 'Please Enter a Valid Email Address: "name@example.com"';
+        emailSpan.textContent = 'Please Enter an Email Address: "name@example.com"';
         fieldSet.insertBefore(emailSpan, email);
     } else {
         if (emailSpan) {
