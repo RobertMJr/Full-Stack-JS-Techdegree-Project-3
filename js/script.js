@@ -278,49 +278,76 @@ if (paymentSelect.children[1].selected){
 }
 });
 
-name.addEventListener('input', (event) => {
-   if (!validateName() && event.target.value.length === 0) {
-    name.style.borderColor = '#ee200ef6';
-    nameSpan.textContent = "Please Enter Your Name - the name field can't be empty";
-    fieldSet.insertBefore(nameSpan, name);
-   } else if (!validateName()) {
-    if (nameSpan) {
-        nameSpan.remove();
-    }
-    name.style.borderColor = '#ee200ef6';
-    nameSpan.textContent = "Please Enter Your Name - only letters and a space";
-    fieldSet.insertBefore(nameSpan, name);
-   } else {
-       if (nameSpan) {
-           nameSpan.remove();
-       }
-       name.style.borderColor = 'rgb(111, 157, 220)';
-   }
-});
-
-email.addEventListener('input', (event) => {
-    if (!validateEmail() && event.target.value.length === 0) {
-        email.style.borderColor = '#ee200ef6';
-        emailSpan.textContent = "Please Enter Your Email: email field can't be empty";
-        fieldSet.insertBefore(emailSpan, email);
-    } else if (!validateEmail()) {
-        if (emailSpan) {
-            emailSpan.remove();
-        }
-        email.style.borderColor = '#ee200ef6';
-        emailSpan.textContent = 'Please Enter an Email Address: "name@example.com"';
-        fieldSet.insertBefore(emailSpan, email);
-    } else {
-        if (emailSpan) {
-            emailSpan.remove();
-        }
-        email.style.borderColor = 'rgb(111, 157, 220)';
-    }
-});
-
 fieldsetActivities.addEventListener('change', () => {
     if(validateActivity() && activitiesErrParagraph) {
         activitiesErrParagraph.remove();
         fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
     }
 });
+
+function showError (elementId, resultType, element) {
+    if (resultType === 'zeroLength' ) {
+        element.style.borderColor = '#ee200ef6';
+        switch(elementId) {
+            case 'name':
+                nameSpan.textContent = "Please Enter Your Name - the name field can't be empty";
+                fieldSet.insertBefore(nameSpan, element);
+                break;
+            case 'mail':
+                emailSpan.textContent = "Please Enter Your Email: email field can't be empty";
+                fieldSet.insertBefore(emailSpan, element);
+                break;
+        }
+    } else if (resultType === 'invalid') {
+        element.style.borderColor = '#ee200ef6';
+        switch(elementId) {
+            case 'name':
+                if (nameSpan) {
+                    nameSpan.remove();
+                }
+                nameSpan.textContent = "Please Enter Your Name - only letters and a space";
+                fieldSet.insertBefore(nameSpan, element);
+                break;
+            case 'mail':
+                if (emailSpan) {
+                    emailSpan.remove();
+                }
+                emailSpan.textContent = 'Please Enter an Email Address: "name@example.com"';
+                fieldSet.insertBefore(emailSpan, element);
+                break;
+        }
+    } else {
+        element.style.borderColor = 'rgb(111, 157, 220)';
+        switch(elementId) {
+            case 'name':
+                if (nameSpan) {
+                    nameSpan.remove();
+                }
+                break;
+            case 'mail':
+                if (emailSpan) {
+                    emailSpan.remove();
+                }
+                break;
+        }
+    }
+
+}
+
+function createListener(validator) {
+    return e => {
+        const val = e.target.value;
+        const result = validator(val);
+        const noResult = !result && val.length === 0;
+        const invalidResult = !result;
+        if (noResult) {
+            showError(e.target.id, 'zeroLength', e.target);
+        } else if (invalidResult) {
+            showError(e.target.id, 'invalid', e.target);
+        } else {
+            showError(e.target.id, 'pass', e.target);
+        }
+    }
+}
+name.addEventListener('input', createListener(validateName));
+email.addEventListener('input', createListener(validateEmail));
