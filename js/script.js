@@ -278,13 +278,6 @@ if (paymentSelect.children[1].selected){
 }
 });
 
-fieldsetActivities.addEventListener('change', () => {
-    if(validateActivity() && activitiesErrParagraph) {
-        activitiesErrParagraph.remove();
-        fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
-    }
-});
-
 function showError (elementId, resultType, element) {
     if (resultType === 'zeroLength' ) {
         element.style.borderColor = '#ee200ef6';
@@ -331,7 +324,6 @@ function showError (elementId, resultType, element) {
                 break;
         }
     }
-
 }
 
 function createListener(validator) {
@@ -349,5 +341,12 @@ function createListener(validator) {
         }
     }
 }
+
 name.addEventListener('input', createListener(validateName));
 email.addEventListener('input', createListener(validateEmail));
+fieldsetActivities.addEventListener('change', () => {
+    if(validateActivity() && activitiesErrParagraph) {
+        activitiesErrParagraph.remove();
+        fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
+    }
+});
