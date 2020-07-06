@@ -153,6 +153,7 @@ function createErrorElement(elem) {
         spanElement.style.border = "2px solid red";
         spanElement.style.borderRadius = "5px";
         spanElement.style.backgroundColor = "white";
+        spanElement.style.textAlign = "center";
         return spanElement;
     } else {
         const errorP = document.createElement('p');
@@ -179,6 +180,7 @@ const cvv = document.querySelector('#cvv');
 const fieldSet = document.querySelector('form').firstElementChild;
 const nameSpan = createErrorElement('span');
 const emailSpan = createErrorElement('span');
+const creditSpan = createErrorElement('span');
 
 /* Validation function for the name: 
     - Name field can't be blank
@@ -283,12 +285,16 @@ function showError (elementId, resultType, element) {
         element.style.borderColor = '#ee200ef6';
         switch(elementId) {
             case 'name':
-                nameSpan.textContent = "Please Enter Your Name - the name field can't be empty";
+                nameSpan.innerHTML = "Please Enter Your Name - the name field can't be empty";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
-                emailSpan.textContent = "Please Enter Your Email: email field can't be empty";
+                emailSpan.innerHTML = "Please Enter Your Email: email field can't be empty";
                 fieldSet.insertBefore(emailSpan, element);
+                break;
+            case 'cc-num':
+                creditSpan.innerHTML = "Please Enter a Credit Card Number <br> - Email field can't be empty -";
+                creditCard.parentElement.appendChild(creditSpan);
                 break;
         }
     } else if (resultType === 'invalid') {
@@ -298,15 +304,22 @@ function showError (elementId, resultType, element) {
                 if (nameSpan) {
                     nameSpan.remove();
                 }
-                nameSpan.textContent = "Please Enter Your Name - only letters and a space";
+                nameSpan.innerHTML = "Please Enter Your Name - only letters and a space";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
                 if (emailSpan) {
                     emailSpan.remove();
                 }
-                emailSpan.textContent = 'Please Enter an Email Address: "name@example.com"';
+                emailSpan.innerHTML = 'Please Enter an Email Address: "name@example.com"';
                 fieldSet.insertBefore(emailSpan, element);
+                break;
+            case 'cc-num':
+                if (creditSpan){
+                    creditSpan.remove();
+                }
+                creditSpan.innerHTML = "Please Enter a Credit Card Number <br> - Between 13 and 16 digits -"
+                creditCard.parentElement.appendChild(creditSpan);
                 break;
         }
     } else {
@@ -320,6 +333,11 @@ function showError (elementId, resultType, element) {
             case 'mail':
                 if (emailSpan) {
                     emailSpan.remove();
+                }
+                break;
+            case 'cc-num':
+                if (creditSpan) {
+                    creditSpan.remove();
                 }
                 break;
         }
@@ -344,9 +362,15 @@ function createListener(validator) {
 
 name.addEventListener('input', createListener(validateName));
 email.addEventListener('input', createListener(validateEmail));
+creditCard.addEventListener('input', createListener(validateCCNumber));
 fieldsetActivities.addEventListener('change', () => {
     if(validateActivity() && activitiesErrParagraph) {
         activitiesErrParagraph.remove();
         fieldsetActivities.firstElementChild.style.color = 'whitesmoke';
+    }
+    else {
+        activitiesErrParagraph.remove();
+        fieldsetActivities.firstElementChild.style.color = 'red';
+        fieldsetActivities.insertBefore(activitiesErrParagraph, fieldsetActivities.firstElementChild);
     }
 });
