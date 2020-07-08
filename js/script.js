@@ -267,6 +267,7 @@ designSelect.addEventListener('change', (event) =>{
     /* If the selected theme is 'js puns' change the color label's text, unhide the select element and call the hideColor function on the selected theme's value
         Else if the selected theme is 'heart js' change the color label's text, unhide the select element and call the hideColor function on the selected theme's value
         Otherwise change the color label's text and hide the select element. */
+    designSelect.firstElementChild.hidden = true;
     if (event.target.value === "js puns"){
         colorLabel.textContent = "Color:";
         colorSelect[0].hidden = false;
