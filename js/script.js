@@ -80,13 +80,14 @@ function createErrorElement(elem) {
     if (elem === 'span') {
         const spanElement = document.createElement('span');
         spanElement.style.color = 'red';
-        spanElement.style.padding = "0px 2px";
+        spanElement.style.padding = "0px 3px";
         spanElement.style.marginBottom = "2px";
         spanElement.style.display = "inline-block";
         spanElement.style.border = "2px solid red";
         spanElement.style.borderRadius = "5px";
         spanElement.style.backgroundColor = "white";
         spanElement.style.textAlign = "center";
+        spanElement.style.fontStyle = "italic";
         return spanElement;
     } else {
         const errorP = document.createElement('p');
@@ -144,23 +145,23 @@ function showError (elementId, resultType, element) {
         element.style.borderColor = '#ee200ef6';
         switch(elementId) {
             case 'name':
-                nameSpan.innerHTML = "Please Enter Your Name - the name field can't be empty";
+                nameSpan.innerHTML = "Please enter your name - Name field can't be empty";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
-                emailSpan.innerHTML = "Please Enter Your Email: email field can't be empty";
+                emailSpan.innerHTML = "Please enter your email - Email field can't be empty";
                 fieldSet.insertBefore(emailSpan, element);
                 break;
             case 'cc-num':
-                creditSpan.innerHTML = "Please Enter a Credit Card Number <br> Email field can't be empty";
+                creditSpan.innerHTML = "The Card Number field should not be empty";
                 creditCard.parentElement.appendChild(creditSpan);
                 break;
             case 'zip':
-                zipSpan.innerHTML = "Enter Your Zip Code <br> The zip field can't be empty";
+                zipSpan.innerHTML = "This field should not be empty";
                 zipCode.parentElement.appendChild(zipSpan);
                 break;
             case 'cvv':
-                cvvSpan.innerHTML = "Enter Your CVV <br> The zip field can't be empty";
+                cvvSpan.innerHTML = "This field should not be empty";
                 cvv.parentElement.appendChild(cvvSpan);
                 break;
         }
@@ -171,7 +172,7 @@ function showError (elementId, resultType, element) {
                 if (nameSpan) {
                     nameSpan.remove();
                 }
-                nameSpan.innerHTML = "Please Enter Your Name - only letters and a space";
+                nameSpan.innerHTML = "Please Enter Your Name: only letters and a space";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
@@ -185,21 +186,21 @@ function showError (elementId, resultType, element) {
                 if (creditSpan){
                     creditSpan.remove();
                 }
-                creditSpan.innerHTML = "Please Enter a Credit Card Number <br> Between 13 and 16 digits"
+                creditSpan.innerHTML = "Enter a Credit Card Number that is between 13 and 16 digits"
                 creditCard.parentElement.appendChild(creditSpan);
                 break;
             case 'zip':
                 if (zipSpan){
                     zipSpan.remove();
                 }
-                zipSpan.innerHTML = "Enter Your Zip Code <br> 5 digits"
+                zipSpan.innerHTML = "Enter your 5 digit <br> Zip Code <br>"
                 zipCode.parentElement.appendChild(zipSpan);
                 break;
             case 'cvv':
                 if (cvvSpan){
                     cvvSpan.remove();
                 }
-                cvvSpan.innerHTML = "Enter Your CVV <br> 3 digits"
+                cvvSpan.innerHTML = "Enter your 3 digit  <br> CVV"
                 cvv.parentElement.appendChild(cvvSpan);
                 break;
         }
@@ -251,8 +252,6 @@ function createListener(validator) {
         }
     }
 }
-
-/* Event Listeners */
 
 // Displays the 'Other' input element when the option element with the value 'Other' is selected and hides it when it is not selected.
 roleSelect.addEventListener('change', (event) => {
