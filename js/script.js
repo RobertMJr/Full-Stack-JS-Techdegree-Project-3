@@ -103,6 +103,15 @@ function createErrorElement(elem) {
         return errorP;
     }
 };
+
+// A function that removes the element containing the real-time validation error message from the DOM if it exists
+function removeErrorElement(elem) {
+    if (elem.previousElementSibling && elem.previousElementSibling.tagName === 'SPAN') {
+        elem.previousElementSibling.remove();
+    } else if (elem.nextElementSibling && elem.nextElementSibling.tagName === 'SPAN') {
+        elem.nextElementSibling.remove();
+    }
+}
   
 // Validation function for the name field - allows one space character and letters only 
 const validateName = () => {
@@ -170,70 +179,34 @@ function showError (elementId, resultType, element) {
         element.style.borderColor = '#ee200ef6';
         switch(elementId) {
             case 'name':
-                if (nameSpan) {
-                    nameSpan.remove();
-                }
+                removeErrorElement(element);
                 nameSpan.innerHTML = "Please Enter Your Name: only letters and a space character";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
-                if (emailSpan) {
-                    emailSpan.remove();
-                }
+                removeErrorElement(element);
                 emailSpan.innerHTML = 'Please Enter an Email Address: "name@example.com"';
                 fieldSet.insertBefore(emailSpan, element);
                 break;
             case 'cc-num':
-                if (creditSpan){
-                    creditSpan.remove();
-                }
-                creditSpan.innerHTML = "Enter a Credit Card Number that is between 13 and 16 digits"
+                removeErrorElement(element);
+                creditSpan.innerHTML = "Enter a Credit Card number that is between 13 and 16 digits"
                 creditCard.parentElement.appendChild(creditSpan);
                 break;
             case 'zip':
-                if (zipSpan){
-                    zipSpan.remove();
-                }
-                zipSpan.innerHTML = "Enter your 5 digit <br> Zip Code <br>"
+                removeErrorElement(element);
+                zipSpan.innerHTML = "Enter your 5 digit <br> Zip Code "
                 zipCode.parentElement.appendChild(zipSpan);
                 break;
             case 'cvv':
-                if (cvvSpan){
-                    cvvSpan.remove();
-                }
+                removeErrorElement(element);
                 cvvSpan.innerHTML = "Enter your 3 digit  <br> CVV"
                 cvv.parentElement.appendChild(cvvSpan);
                 break;
         }
     } else {
         element.style.borderColor = 'rgb(111, 157, 220)';
-        switch(elementId) {
-            case 'name':
-                if (nameSpan) {
-                    nameSpan.remove();
-                }
-                break;
-            case 'mail':
-                if (emailSpan) {
-                    emailSpan.remove();
-                }
-                break;
-            case 'cc-num':
-                if (creditSpan) {
-                    creditSpan.remove();
-                }
-                break;
-            case 'zip':
-                if (zipSpan) {
-                    zipSpan.remove();
-                }
-                break;
-            case 'cvv': 
-                if (cvvSpan) {
-                    cvvSpan.remove();
-                }
-                break;
-        }
+        removeErrorElement(element);
     }
 }
 
