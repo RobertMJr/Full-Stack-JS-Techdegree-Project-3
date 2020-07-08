@@ -96,8 +96,9 @@ function createErrorElement(elem) {
         errorP.style.backgroundColor = "white";
         errorP.style.display = "inline-block";
         errorP.style.marginTop = "0px";
-        errorP.style.padding = "0px 2px";
+        errorP.style.padding = "0px 3px";
         errorP.style.border = "2px solid red";
+        errorP.style.fontStyle = "italic";
         errorP.style.borderRadius = "5px";
         return errorP;
     }
@@ -145,11 +146,11 @@ function showError (elementId, resultType, element) {
         element.style.borderColor = '#ee200ef6';
         switch(elementId) {
             case 'name':
-                nameSpan.innerHTML = "Please enter your name - Name field can't be empty";
+                nameSpan.innerHTML = "Please Enter Your Name - Name field can't be empty";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
-                emailSpan.innerHTML = "Please enter your email - Email field can't be empty";
+                emailSpan.innerHTML = "Please Enter Your Email - Email field can't be empty";
                 fieldSet.insertBefore(emailSpan, element);
                 break;
             case 'cc-num':
@@ -172,7 +173,7 @@ function showError (elementId, resultType, element) {
                 if (nameSpan) {
                     nameSpan.remove();
                 }
-                nameSpan.innerHTML = "Please Enter Your Name: only letters and a space";
+                nameSpan.innerHTML = "Please Enter Your Name: only letters and a space character";
                 fieldSet.insertBefore(nameSpan, element);
                 break;
             case 'mail':
