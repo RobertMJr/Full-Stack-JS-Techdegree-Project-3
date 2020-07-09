@@ -355,6 +355,7 @@ email.addEventListener('input', createListener(validateEmail));
 creditCard.addEventListener('input', createListener(validateCCNumber));
 zipCode.addEventListener('input', createListener(validateZipCode));
 cvv.addEventListener('input', createListener(validateCVV));
+
 fieldsetActivities.addEventListener('change', () => {
     if(validateActivity() && activitiesErrParagraph) {
         activitiesErrParagraph.remove();
