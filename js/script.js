@@ -79,27 +79,12 @@ function hideColor(design){
 function createErrorElement(elem) {
     if (elem === 'span') {
         const spanElement = document.createElement('span');
-        spanElement.style.color = 'red';
-        spanElement.style.padding = "0px 3px";
-        spanElement.style.marginBottom = "2px";
-        spanElement.style.display = "inline-block";
-        spanElement.style.border = "2px solid red";
-        spanElement.style.borderRadius = "5px";
-        spanElement.style.backgroundColor = "white";
-        spanElement.style.textAlign = "center";
-        spanElement.style.fontStyle = "italic";
+        spanElement.classList.add('span-error');
         return spanElement;
     } else {
         const errorP = document.createElement('p');
+        errorP.classList.add('paragraph-error');
         errorP.textContent = "Please select at least one activity";
-        errorP.style.color = "red";
-        errorP.style.backgroundColor = "white";
-        errorP.style.display = "inline-block";
-        errorP.style.marginTop = "0px";
-        errorP.style.padding = "0px 3px";
-        errorP.style.border = "2px solid red";
-        errorP.style.fontStyle = "italic";
-        errorP.style.borderRadius = "5px";
         return errorP;
     }
 };
