@@ -121,7 +121,7 @@ const validateName = () => {
 // Validation function for the email
 const validateEmail = () => {
     const emailValue = email.value;
-    return /^[^@\s]+@[^@.\s]+\.[a-z]+$/i.test(emailValue);
+    return /^[^@\s]+@[^@.\s]+\.[a-z]{2,}$/i.test(emailValue);
 };
 // Validation function for the activities - returns true if at least one activity is checked, returns false othwerwise
 const validateActivity = () => {
